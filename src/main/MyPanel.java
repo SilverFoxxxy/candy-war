@@ -25,8 +25,10 @@ import javax.swing.Timer;
 
 import ImageSource.ImageSource;
 import main.GrUI.Element;
+//import main.MyPanel.TestActionListener;
+import main.Main.TestActionListener;
 
-public class Main extends JPanel implements ActionListener {
+public class MyPanel extends JPanel implements ActionListener {
 	
 	Timer timer = new Timer(30, this);
 	
@@ -36,7 +38,7 @@ public class Main extends JPanel implements ActionListener {
 	
 	ImageSource imgSrc = new ImageSource();
 	
-	public Main(JFrame frame) {
+	public MyPanel(JFrame frame) {
 		this.frame = frame;
 		
 		//this.setSize(frame.getSize());
@@ -74,24 +76,20 @@ public class Main extends JPanel implements ActionListener {
 		}
 		String name;
 		public void actionPerformed(ActionEvent e) {
-			//universe.globalVar.put(name, 1);
+			universe.globalVar.put(name, 1);
 		}
 	}
 	
 	public void addButton(Element el) {
-		double W = this.getWidth();
-		double H = this.getHeight();
+		double W = frame.getWidth();
+		double H = frame.getHeight();
 		JButton button = new JButton((imgSrc.iconSource.get(el.imgID)));
 		button.setBounds((int)(el.x0 * W), (int)(el.y0 * H), 
 				(int)(el.w * W), (int)(el.h * H));
-		//button.setIcon();
 		ActionListener actlist = new TestActionListener(el.name);
 		button.addActionListener(actlist);
-		//button.setVisible(true);
 		this.add(button);
 		this.validate();
-		//frame.setVisible(true);
-		//button.setVisible(true);
 	}
 	
 	public void paint(Graphics g) {
@@ -107,17 +105,20 @@ public class Main extends JPanel implements ActionListener {
 				if (!el.buttonAdded) {
 					addButton(el);
 					el.buttonAdded = true;
+				} else {
+					//if (el.toRemove) {
+					//	
+					//}
 				}
-			} else {
+			}else {
 				g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H), (int)(el.w * W), (int)(el.h * H), null);
 			}
-			g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H), (int)(el.w * W), (int)(el.h * H), null);
-			
 		}
 		/*g2.setColor(Color.BLUE);
 		
 		Shape circle = new Ellipse2D.Double(100, 100, 100, 100);
 		g2.fill(circle);*/
+		super.paint(g);
 	}
 	
 	@Override
@@ -126,5 +127,4 @@ public class Main extends JPanel implements ActionListener {
 		repaint();
 		universe.move();
 	}
-	
 }
