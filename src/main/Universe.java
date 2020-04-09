@@ -1,8 +1,12 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
+
+//import javax.swing.JPanel;
 
 import main.GrUI.Element;
 import main.activities.Activity;
@@ -12,30 +16,28 @@ public class Universe {
 	int singleton = 0;
 	//ArrayList <Activity> activities = new ArrayList<>();
 	
-	public static Map <String, Element> elems = new HashMap<>();
+	public static Vector <Map <String, Element> > elems = 
+			new Vector<>(Arrays.asList(new HashMap<>(), new HashMap<>(),
+				new HashMap<>(), new HashMap<>(), new HashMap<>(),
+				new HashMap<>(), new HashMap<>(), new HashMap<>(),
+				new HashMap<>()));
 	public static Map <String, Integer> globalVar = new HashMap<>();
 	
 	ArrayList <String> keys = new ArrayList<>();
 	
 	Activity mainActivity = new MainActivity();
 	
-	//Map <String, Integer> lobalVar = new HashMagp<>();
+	public static MyPanel panel;
 	
-	public Universe() {
+	public Universe(MyPanel panel) {
 		singleton = 1;
-		//elems = new HashMap<>();
-		//globalVar = new HashMap<>();
-		//Map <String, Element> kek = elems;
-		//kek.put("Start", new Element("Start", 1/3., 1/3., 1/3., 1/3., true, 0, true));
-		//elems.put("Start", new Element("Start", 1/3., 1/3., 1/3., 1/3., true, 0, true));
-		
 	}
 	
-	public Map <String, Element> show() {
+	public Vector <Map <String, Element> > show() {
 		return elems;
 	}
 	
 	public void move() {
-		
+		mainActivity.move();
 	}
 }

@@ -1,30 +1,24 @@
 package main.activities;
 
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.Map;
-
-import javax.swing.ImageIcon;
-
-import main.GrUI;
-import main.Universe;
 import main.GrUI.Element;
-import main.sheet.Button;
 
 public class StartActivity extends Activity{
-	//Button start;
-	//ArrayList<Element> elems;
+	
 	public StartActivity() {
-		//super();
-		elems.put("Start", new Element("Start", 1/3., 1/3., 1/3., 1/3., true, 0, true));
-		//super.Activity();
-		//Image imgStart = new ImageIcon("res/img/start.png").getImage();
-		//start = new Element("Start", 0.4, 0.4, 0.2, 0.2, imgStart, true);
-		
+		super();
+		activityName = "Start";
+		elemsVec.get(1).put("Start", new Element("Start", 1/3., 1/3., 1/3., 1/3., true, "YellowBear", true));
 	}
 	
 	public void move() {
-		
+		if (globalVar.containsKey("Start")) {
+			if (globalVar.get("Start") == 1) {
+				toRemove = true;
+				removeElem("Start");
+				//System.out.println("startt remove");
+				activities.put("Test", new TestBoardActivity());
+			}
+		}
 	}
 	/*public ArrayList<Element> show() {
 		return elems;

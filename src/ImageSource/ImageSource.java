@@ -2,6 +2,8 @@ package ImageSource;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 
@@ -33,11 +35,22 @@ public class ImageSource {
 	        return value;
 	    }
 	}*/
-	public ArrayList <ImageIcon> iconSource = new ArrayList<>();
-	public ArrayList <Image> imgSource = new ArrayList <>();
+	public Map <String, ImageIcon> iconSource = new HashMap<>();
+	public Map <String, Image> imgSource = new HashMap <>();
 	ArrayList <ArrayList <Image> > brickSource = new ArrayList <>();
+	
+	public void addByPath(String path, String imgID) {
+		imgSource.put(imgID, new ImageIcon("res/img/" + path + ".png").getImage());
+		iconSource.put(imgID, new ImageIcon("res/img/" + path + ".png"));
+	}
+	
 	public ImageSource() {
-		imgSource.add(new ImageIcon("res/img/start.png").getImage());
-		iconSource.add(new ImageIcon("res/img/start.png"));
+		addByPath("start", "Start");
+		addByPath("bluebear", "BlueBear");
+		addByPath("yellowbear", "YellowBear");
+		addByPath("ground", "Chocolate");
+		addByPath("dragon1", "Dragon");
+		addByPath("fireball1", "FireBall");
+		addByPath("bluefireball0", "BlueFireBall");
 	}
 }

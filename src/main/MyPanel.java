@@ -2,22 +2,24 @@ package main;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
+//import java.awt.Graphics2D;
+//import java.awt.Image;
+//import java.awt.Rectangle;
+//import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.RoundRectangle2D;
+//import java.awt.geom.Ellipse2D;
+//import java.awt.geom.Line2D;
+//import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+//import java.util.Map.Entry;
+import java.util.Vector;
 
-import javax.swing.ImageIcon;
+//import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,30 +27,26 @@ import javax.swing.Timer;
 
 import ImageSource.ImageSource;
 import main.GrUI.Element;
-//import main.MyPanel.TestActionListener;
-import main.Main.TestActionListener;
 
 public class MyPanel extends JPanel implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	Timer timer = new Timer(30, this);
 	
 	JFrame frame;
 	
-	Universe universe = new Universe();
+	Universe universe = new Universe(this);
 	
 	ImageSource imgSrc = new ImageSource();
 	
+	Map <String, JButton> panelButtons = new HashMap<>();
+	
 	public MyPanel(JFrame frame) {
 		this.frame = frame;
-		
-		//this.setSize(frame.getSize());
-		
-	    //this.validate();
-	    //this.setBounds(10, 10, 20, 20);
-	    //this.setBackground(Color.gray);
-	    //this.setVisible(true);
-	    //this.validate();
-	    //frame.validate();
 		timer.start();
 		frame.addKeyListener(new KeyAdapter() {
 
@@ -76,7 +74,8 @@ public class MyPanel extends JPanel implements ActionListener {
 		}
 		String name;
 		public void actionPerformed(ActionEvent e) {
-			universe.globalVar.put(name, 1);
+			Universe.globalVar.put(name, 1);
+			System.out.println(name + " pressed // globalVar = " + ((int)(Universe.globalVar.get(name))));
 		}
 	}
 	
@@ -88,42 +87,75 @@ public class MyPanel extends JPanel implements ActionListener {
 				(int)(el.w * W), (int)(el.h * H));
 		ActionListener actlist = new TestActionListener(el.name);
 		button.addActionListener(actlist);
+		Universe.globalVar.put(el.name, 0);
+		panelButtons.put(el.name, button);
 		this.add(button);
+		this.validate();
+		//this.remove(panelButtons.get(el.name));
+		//this.validate();
+	}
+	
+	public void removeButton(Element el) {
+		this.remove(panelButtons.get(el.name));
+		if (panelButtons.containsKey(el.name)) {
+			panelButtons.remove(el.name);
+		}
+		//System.out.println(elemName + " removed");
 		this.validate();
 	}
 	
 	public void paint(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		//setBackground(Color.WHITE);
-		Map <String, Element> elems = universe.show();
+		this.setSize(frame.getSize());
+		setBackground(Color.lightGray);
+		super.paint(g);
+		//Graphics2D g2 = (Graphics2D) g;
+		//
+		Vector <Map <String, Element> > elemsVec = universe.show();
 		double W = frame.getWidth();
 		double H = frame.getHeight();
-		for (Element el : elems.values()) {
-	        //System.out.println(entry.getKey() + ":" + entry.getValue());
-			//g.drawImage(imgSrc.imgSource.get(0), (int)(0 * W), (int)(0 * H), (int)(W), (int)(H), null);
-			if (el.isButton) {
-				if (!el.buttonAdded) {
-					addButton(el);
-					el.buttonAdded = true;
-				} else {
-					//if (el.toRemove) {
-					//	
-					//}
+		ArrayList<Element> elem2Remove = new ArrayList<>();
+		for (Map<String, Element> elems: elemsVec) {
+			for (Element el : elems.values()) {
+		        //System.out.println(entry.getKey() + ":" + entry.getValue());
+				//g.drawImage(imgSrc.imgSource.get(0), (int)(0 * W), (int)(0 * H), (int)(W), (int)(H), null);
+				if (el.toRemove) {
+					if (el.isButton) {
+						removeButton(el);
+					}
+					elem2Remove.add(el);
 				}
-			}else {
-				g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H), (int)(el.w * W), (int)(el.h * H), null);
+			}
+			for (Element el: elem2Remove) {
+				elems.remove(el.name);
+			}
+			for (Element el : elems.values()) {
+		        if (el.isButton) {
+					if (!el.buttonAdded) {
+						addButton(el);
+						el.buttonAdded = true;
+					} else {
+						panelButtons.get(el.name).setBounds((int)(el.x0 * W), (int)(el.y0 * H), 
+					(int)(el.w * W), (int)(el.h * H));
+					}
+		        } else {
+		        	g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H),
+		        			(int)(el.w * W) + 1, (int)(el.h * H) + 1, null);
+				}
 			}
 		}
 		/*g2.setColor(Color.BLUE);
 		
 		Shape circle = new Ellipse2D.Double(100, 100, 100, 100);
 		g2.fill(circle);*/
-		super.paint(g);
 	}
+	
+	//public int cnt = 0;
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		//cnt++;
+		//System.out.println(cnt);
 		repaint();
 		universe.move();
 	}
