@@ -4,7 +4,7 @@
 Done: Classes
 ------------------------------------------------------------
 
-TODO: More Clases)/ Singleton
+TODO: More Classes)/ Singleton
 
 
 Done: Activities
