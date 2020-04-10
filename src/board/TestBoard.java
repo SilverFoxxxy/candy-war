@@ -118,4 +118,7 @@ public class TestBoard extends Board {
 			unit.hit();
 		}
 	}
+	
+	public void kill() {
+	}
 }

@@ -38,6 +38,11 @@ public class Universe {
 	}
 	
 	public void move() {
+		for (String key: keys) {
+			if (key == "space") {
+				globalVar.put("space", 1);
+			}
+		}
 		mainActivity.move();
 	}
 }

@@ -58,6 +58,9 @@ public class MyPanel extends JPanel implements ActionListener {
 				if (key == KeyEvent.VK_ENTER) {
 					universe.keys.add("enter");
 				}
+				if (key == KeyEvent.VK_SPACE) {
+					universe.keys.add("space");
+				}
 			}
 
 			@Override

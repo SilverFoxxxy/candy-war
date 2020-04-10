@@ -2,6 +2,7 @@ package main.activities;
 
 import board.Board;
 import board.TestBoard;
+//import testrandom.TestRandom;
 
 public class TestBoardActivity extends Activity {
 	
@@ -24,6 +25,14 @@ public class TestBoardActivity extends Activity {
 	}
 	
 	public void move() {
+		/*if (globalVar.containsKey("space")) {
+			if (globalVar.get("space") == 1) {
+				globalVar.put("space", 0);
+				testBoard.kill();
+				testBoard = new TestBoard(TestRandom.randInRange(5, 9));
+				testBoard.start();
+			}
+		}*/
 		testBoard.move();
 	}
 	

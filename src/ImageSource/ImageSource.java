@@ -7,6 +7,10 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 
+import img.SourceLoader;
+
+
+
 public class ImageSource {
 	// singleton
 	/*public enum PageType {
@@ -40,8 +44,10 @@ public class ImageSource {
 	ArrayList <ArrayList <Image> > brickSource = new ArrayList <>();
 	
 	public void addByPath(String path, String imgID) {
-		imgSource.put(imgID, new ImageIcon("res/img/" + path + ".png").getImage());
-		iconSource.put(imgID, new ImageIcon("res/img/" + path + ".png"));
+		String defFolder = "res/img/";
+		defFolder = "";
+		imgSource.put(imgID, SourceLoader.loadImage(defFolder + path + ".png"));
+		iconSource.put(imgID, new ImageIcon(SourceLoader.loadImage(defFolder + path + ".png")));
 	}
 	
 	public ImageSource() {
