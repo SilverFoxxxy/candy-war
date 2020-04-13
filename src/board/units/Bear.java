@@ -1,11 +1,16 @@
 package board.units;
 
+import java.util.Map;
+
+import board.Board;
+
 public class Bear extends Unit{
-	public Bear() {
-		super();
+	public Bear(Board board) {
+		super(board);
 	}
-	public Bear(String team, String imgName) {
-		super();
+	
+	public Bear(Board board, String team, String imgName) {
+		super(board);
 		this.team = team;
 		this.imgID = imgName;
 		imgSize = 0.2;
@@ -18,6 +23,7 @@ public class Bear extends Unit{
 	}
 	
 	public void hit() {
+		Map <Integer, Unit> units = board.units;
 		if (units.containsKey(targetID)) {
 			if (coords.dist(units.get(targetID).coords) <= atcDist &&
 					coolDown == 0) {
@@ -30,12 +36,10 @@ public class Bear extends Unit{
 		}
 	}
 	
-	public void move() {
-		if (HP <= 0) {
-			die();
-		}
+	private void findTarget() {
+		Map <Integer, Unit> units = board.units;
 		if (units.containsKey(targetID)) {
-			if (coords.dist(units.get(targetID).coords) > targetDist) {
+			if (coords.dist(units.get(targetID).coords) > visionDist) {
 				targetID = -1;
 			}
 		} else {
@@ -55,6 +59,10 @@ public class Bear extends Unit{
 			}
 			targetID = lastID;
 		}
+	}
+	
+	private void move2Target() {
+		Map <Integer, Unit> units = board.units;
 		if (targetID != -1) {
 			if (coords.dist(units.get(targetID).coords) > closeDist) {
 				speed = (units.get(targetID).coords.sub(coords));
@@ -63,5 +71,17 @@ public class Bear extends Unit{
 				coords = coords.add(speed);
 			}
 		}
+	}
+	
+	public void move() {
+		
+		if (HP <= 0) {
+			die();
+		}
+		
+		findTarget();
+		
+		move2Target();
+		
 	}
 }

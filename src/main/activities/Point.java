@@ -1,4 +1,4 @@
-package board;
+package main.activities;
 
 public class Point {
 	public double x = 0;

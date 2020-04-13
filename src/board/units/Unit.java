@@ -1,17 +1,15 @@
 package board.units;
 
-import java.util.Map;
-import java.util.Vector;
-
 import board.Board;
-import board.Point;
+import main.activities.Point;
 
 public class Unit {
-	//TODO id
-	//protected Board board;
-	protected Map<Integer, Unit> units = null;
 	
-	protected Vector<Unit> newUnits = new Vector<>();
+	// static maxID?
+	
+	public Board board;
+	
+	public int ID = -1;
 	
 	protected int targetID = -1;
 	
@@ -19,17 +17,17 @@ public class Unit {
 	
 	public double imgSize = 1;
 	
-	protected int ID = -1;
-	
-	public int targetLevel = 1;
+	// highness of the minion:
 	
 	public int level = 1;
 	
 	public String team = "Attack";
 	
-	public double visionDist = 20;
+	// vision - where the minion can see its targets
+	// atcDist - can attack
+	// closeDist - if further -> move closer
 	
-	public double targetDist = 15;
+	public double visionDist = 20;
 	
 	public double atcDist = 5;
 	
@@ -37,15 +35,15 @@ public class Unit {
 	
 	public int maxCoolDown = 10;
 	
-	public int maxHP = 100;
-	
-	public double maxSpeed = 0.1;
-	
 	public int coolDown = 0;
+	
+	public int maxHP = 100;
 	
 	public int HP = 0;
 	
 	public int ATC = 10;
+	
+	public double maxSpeed = 0.1;
 	
 	public Point speed = new Point(0, 0);
 	
@@ -55,9 +53,8 @@ public class Unit {
 	
 	public boolean dead = false;
 	
-	public Unit() {
-		units = Board.units;
-		newUnits = Board.newUnits;
+	public Unit(Board board) {
+		this.board = board;
 	}
 	
 	public void die() {
@@ -66,6 +63,5 @@ public class Unit {
 	
 	public void hit() {}
 	
-	//Point coords;
 	public void move() {}
 }

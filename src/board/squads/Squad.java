@@ -2,8 +2,8 @@ package board.squads;
 
 import java.util.ArrayList;
 
-import board.Point;
 import board.units.Unit;
+import main.activities.Point;
 import testrandom.TestRandom;
 
 public class Squad {

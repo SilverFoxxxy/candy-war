@@ -4,6 +4,8 @@ import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.Map;
 
+import main.grui.ElementSource;
+
 //import main.GrUI.Element;
 //import main.sheet.Button;
 
@@ -18,6 +20,7 @@ public class MainActivity extends Activity{
 	public void move() {
 		ArrayList<String> toErase = new ArrayList<>();
 		for (String actName: activities.keySet()) {
+			//System.out.println(actName);
 			Activity act = activities.get(actName);
 			if (act.toRemove) {
 				act.clear();
@@ -31,6 +34,14 @@ public class MainActivity extends Activity{
 				activities.remove(actName);
 			}
 		}
+	}
+	
+	public ElementSource show() {
+		elems.clear();
+		for (Activity a: activities.values()) {
+			elems.add(a.show());
+		}
+		return elems;
 	}
 	
 	/*public ArrayList<Element> show() {

@@ -1,17 +1,21 @@
 package board.units;
 
+import java.util.Map;
+import java.util.Vector;
+
+import board.Board;
+
 public class Dragon extends Unit {
 	
-	public Dragon(String team, String imgName) {
-		super();
+	public Dragon(Board board, String team, String imgName) {
+		super(board);
 		this.team = team;
 		this.imgID = imgName;
 		imgSize = 0.5;
 		size = 6;
 		maxSpeed = 0;
 		visionDist = 55;
-		targetDist = visionDist;
-		atcDist = targetDist;
+		atcDist = visionDist;
 		maxHP = 300;
 		HP = 300;
 		ATC = 3;
@@ -21,6 +25,8 @@ public class Dragon extends Unit {
 	}
 	
 	public void hit() {
+		Map <Integer, Unit> units = board.units;
+		Vector <Unit> newUnits = board.newUnits;
 		if (units.containsKey(targetID)) {
 			if (coords.dist(units.get(targetID).coords) <= atcDist &&
 					coolDown == 0) {
@@ -28,7 +34,7 @@ public class Dragon extends Unit {
 				if (team == "Attack") {
 					fireballID = "Blue" + fireballID;
 				}
-				newUnits.add(new DragonFireBall(coords, units.get(targetID).coords, units.get(targetID).level, team, fireballID));
+				newUnits.add(new DragonFireBall(board, coords, units.get(targetID).coords, units.get(targetID).level, team, fireballID));
 				coolDown = maxCoolDown;
 				//System.out.println("DragonBall");
 			}
@@ -38,12 +44,10 @@ public class Dragon extends Unit {
 		}
 	}
 	
-	public void move() {
-		if (HP <= 0) {
-			die();
-		}
+	private void findTarget() {
+		Map <Integer, Unit> units = board.units;
 		if (units.containsKey(targetID)) {
-			if (coords.dist(units.get(targetID).coords) > targetDist) {
+			if (coords.dist(units.get(targetID).coords) > visionDist) {
 				targetID = -1;
 			}
 		} else {
@@ -63,6 +67,10 @@ public class Dragon extends Unit {
 			}
 			targetID = lastID;
 		}
+	}
+	
+	private void move2Target() {
+		Map <Integer, Unit> units = board.units;
 		if (targetID != -1) {
 			if (coords.dist(units.get(targetID).coords) > closeDist) {
 				speed = (units.get(targetID).coords.sub(coords));
@@ -71,6 +79,16 @@ public class Dragon extends Unit {
 				coords = coords.add(speed);
 			}
 		}
+	}
+	
+	public void move() {
+		if (HP <= 0) {
+			die();
+		}
+		
+		findTarget();
+		
+		move2Target();
 	}
 	
 }

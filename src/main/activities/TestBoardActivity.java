@@ -2,7 +2,7 @@ package main.activities;
 
 import board.Board;
 import board.TestBoard;
-//import testrandom.TestRandom;
+import main.grui.ElementSource;
 
 public class TestBoardActivity extends Activity {
 	
@@ -10,7 +10,7 @@ public class TestBoardActivity extends Activity {
 	
 	public TestBoardActivity() {
 		super();
-		activityName = "Test";
+		activityName = "TestBoard";
 		testBoard = new TestBoard(7);
 		
 		testBoard.start();
@@ -36,7 +36,11 @@ public class TestBoardActivity extends Activity {
 		testBoard.move();
 	}
 	
-	//public void show() {
-	//	
-	//}
+	public ElementSource show() {
+		return testBoard.show();
+	}
+	
+	public void clear() {
+		testBoard.clear();
+	}
 }

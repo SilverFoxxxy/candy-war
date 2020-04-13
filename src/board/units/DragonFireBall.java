@@ -1,13 +1,17 @@
 package board.units;
 
-import board.Point;
+import java.util.Map;
+
+import board.Board;
+import main.activities.Point;
 
 public class DragonFireBall extends Unit {
 	double x0, y0, targetX, targetY;
+	int targetLevel = 5;
 	Point coords0;
 	Point coords1;
-	public DragonFireBall(Point coords0, Point coords1, int level, String team, String imgName) {
-		super();
+	public DragonFireBall(Board board, Point coords0, Point coords1, int level, String team, String imgName) {
+		super(board);
 		this.team = team;
 		imgID = imgName;
 		imgSize = 0.75;
@@ -26,6 +30,7 @@ public class DragonFireBall extends Unit {
 	
 	public void hit() {
 		if (coolDown == 0) {
+			Map <Integer, Unit> units = board.units;
 			for (Unit unit: units.values()) {
 				if (unit.team != team && unit.level == targetLevel && coords.dist(unit.coords) <= atcDist) {
 					unit.HP -= ATC;

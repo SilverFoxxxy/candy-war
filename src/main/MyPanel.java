@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 //import java.awt.geom.Ellipse2D;
 //import java.awt.geom.Line2D;
 //import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 //import java.util.Map.Entry;
@@ -27,6 +27,7 @@ import javax.swing.Timer;
 
 import ImageSource.ImageSource;
 import main.GrUI.Element;
+import main.grui.ElementSource;
 
 public class MyPanel extends JPanel implements ActionListener {
 	
@@ -78,7 +79,7 @@ public class MyPanel extends JPanel implements ActionListener {
 		String name;
 		public void actionPerformed(ActionEvent e) {
 			Universe.globalVar.put(name, 1);
-			System.out.println(name + " pressed // globalVar = " + ((int)(Universe.globalVar.get(name))));
+			//System.out.println(name + " pressed // globalVar = " + ((int)(Universe.globalVar.get(name))));
 		}
 	}
 	
@@ -107,34 +108,36 @@ public class MyPanel extends JPanel implements ActionListener {
 		this.validate();
 	}
 	
+	private void checkButtons(Map <String, Element> m) {
+		Vector <String> toRemove = new Vector<>();
+		for (String elName: panelButtons.keySet()) {
+			if (!m.containsKey(elName)) {
+				removeButton(m.get(elName));
+				toRemove.add(elName);
+			}
+		}
+		for (String elName: toRemove) {
+			panelButtons.remove(elName);
+		}
+	}
+	
 	public void paint(Graphics g) {
+		ElementSource elSource = universe.show();
+		Map <String, Element> buttons = elSource.showButtons();
+		Vector <Map <String, Element> > elemsVec = elSource.show();
+		checkButtons(buttons);
 		this.setSize(frame.getSize());
 		setBackground(Color.lightGray);
 		super.paint(g);
 		//Graphics2D g2 = (Graphics2D) g;
-		//
-		Vector <Map <String, Element> > elemsVec = universe.show();
 		double W = frame.getWidth();
 		double H = frame.getHeight();
-		ArrayList<Element> elem2Remove = new ArrayList<>();
 		for (Map<String, Element> elems: elemsVec) {
-			for (Element el : elems.values()) {
-		        //System.out.println(entry.getKey() + ":" + entry.getValue());
-				//g.drawImage(imgSrc.imgSource.get(0), (int)(0 * W), (int)(0 * H), (int)(W), (int)(H), null);
-				if (el.toRemove) {
-					if (el.isButton) {
-						removeButton(el);
-					}
-					elem2Remove.add(el);
-				}
-			}
-			for (Element el: elem2Remove) {
-				elems.remove(el.name);
-			}
 			for (Element el : elems.values()) {
 		        if (el.isButton) {
 					if (!el.buttonAdded) {
 						addButton(el);
+						//System.out.println("button added - " + el.name);
 						el.buttonAdded = true;
 					} else {
 						panelButtons.get(el.name).setBounds((int)(el.x0 * W), (int)(el.y0 * H), 
