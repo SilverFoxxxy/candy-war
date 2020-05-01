@@ -3,6 +3,7 @@ package main.activities;
 import java.util.HashMap;
 import java.util.Map;
 
+import main.GrUI.Element;
 import main.grui.ElementSource;
 
 public class FrontBoardActivity extends Activity{
@@ -34,13 +35,14 @@ public class FrontBoardActivity extends Activity{
 	private void checkButtons() {
 		if (globalVar.containsKey("Cancel") && globalVar.get("Cancel") == 1) {
 			globalVar.put("Cancel", 0);
-			nowUnit = "";
 			if (prices.containsKey(battlefield.nowUnit)) {
 				mana += prices.get(battlefield.nowUnit);
 				if (mana >= maxMana) {
 					mana = maxMana;
 				}
 			}
+			battlefield.nowUnit = "";
+			nowUnit = "";
 			for (String bName: uPanel.buttons) {
 				if (globalVar.containsKey(bName) && globalVar.get(bName) == 1) {
 					globalVar.put(bName, 0);
@@ -60,10 +62,8 @@ public class FrontBoardActivity extends Activity{
 			if (mana >= prices.get(nowUnit)) {
 				mana -= prices.get(nowUnit);
 				battlefield.nowUnit = nowUnit;
+				nowUnit = "";
 			}
-		}
-		if (nowUnit == "") {
-			battlefield.nowUnit = nowUnit;
 		}
 		super.move();
 		if (battlefield.nowUnit == "") {
@@ -76,8 +76,15 @@ public class FrontBoardActivity extends Activity{
 		checkButtons();
 	}
 	
+	private void showMana() {
+		elems.add(new Element("mana", 1. - 1./30, 1. - mana / maxMana, 1./30, mana / maxMana, true, "Start", false));
+	}
+	
 	public ElementSource show() {
+		elems.clear();
+		elems.add(super.show());
+		showMana();
 		//System.out.println(child);
-		return super.show();
+		return elems;
 	}
 }
