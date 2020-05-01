@@ -12,12 +12,13 @@ public class StartActivity extends Activity{
 	}
 	
 	public void move() {
-		
 		if (globalVar.containsKey("Start")) {
 			if (globalVar.get("Start") == 1) {
+				//System.out.println("Start is pressed");
 				toRemove = true;
 				elems.remove("Start");
-				activities.put("Test", new TestBoardActivity());
+				FrontBoardActivity battle = new FrontBoardActivity();
+				toAdd2Parent.add(battle);
 			}
 		}
 	}

@@ -11,7 +11,7 @@ public class TestBoardActivity extends Activity {
 	public TestBoardActivity() {
 		super();
 		activityName = "TestBoard";
-		testBoard = new TestBoard(7);
+		testBoard = new TestBoard(5);
 		
 		testBoard.start();
 		//TODO button to start the process

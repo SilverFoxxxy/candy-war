@@ -1,6 +1,6 @@
 package main.activities;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 //import java.util.HashMap;
 //import java.util.Map;
 
@@ -14,14 +14,14 @@ public class MainActivity extends Activity{
 	public MainActivity() {
 		super();
 		activityName = "Main";
-		activities.put("Start", new StartActivity());
+		childActivities.put("Start", new StartActivity());
 	}
 	
 	public void move() {
-		ArrayList<String> toErase = new ArrayList<>();
-		for (String actName: activities.keySet()) {
+		/*ArrayList<String> toErase = new ArrayList<>();
+		for (String actName: childActivities.keySet()) {
 			//System.out.println(actName);
-			Activity act = activities.get(actName);
+			Activity act = childActivities.get(actName);
 			if (act.toRemove) {
 				act.clear();
 				toErase.add(actName);
@@ -30,15 +30,17 @@ public class MainActivity extends Activity{
 			}
 		}
 		for (String actName: toErase) {
-			if (activities.containsKey(actName)) {
-				activities.remove(actName);
+			if (childActivities.containsKey(actName)) {
+				childActivities.remove(actName);
 			}
-		}
+		}*/
+		super.move();
 	}
 	
 	public ElementSource show() {
+		//System.out.println(childActivities.size());
 		elems.clear();
-		for (Activity a: activities.values()) {
+		for (Activity a: childActivities.values()) {
 			elems.add(a.show());
 		}
 		return elems;

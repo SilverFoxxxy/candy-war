@@ -17,9 +17,9 @@ public class Display {
         JPanel panel = new MyPanel(f);
         f.setLayout(null);
         panel.setLayout(null);
-        panel.setBounds(0, 0, 800, 800);
+        panel.setBounds(0, 0, 750 / 3 * 4, 750);
         f.add(panel);
-        f.setSize(800,800);
+        f.setSize(750 / 3 * 4, 750);
         f.setLayout(null);
         f.setVisible(true);
 	}

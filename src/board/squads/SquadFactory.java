@@ -1,5 +1,8 @@
 package board.squads;
 
+import board.units.Unit;
+import main.activities.Point;
+
 public interface SquadFactory {
 	
 	//public Factory() {}
@@ -7,5 +10,11 @@ public interface SquadFactory {
 	public default Squad BearSquad() {return new Squad();}
 	
 	public default Squad DragonSquad() {return new Squad();}
+	
+	public default Squad SquadByName(String s) {return new Squad();}
+	
+	public default Unit Triangle(Point xy) {return new Unit(0);}
+	
+	public default Unit MainBuild(Point xy) {return new Unit(0);}
 	
 }

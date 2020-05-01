@@ -59,6 +59,19 @@ public class Bear extends Unit{
 			}
 			targetID = lastID;
 		}
+		if (targetID == -1) {
+			double minDist = 100000000.;
+			int lastID = -1;
+			for (Unit b: board.buildings) {
+				if (coords.dist(b.coords) <= minDist &&
+						team != b.team && !b.dead) {
+					lastID = b.ID;
+					minDist = coords.dist(b.coords);
+					//speedXY = 
+				}
+			}
+			targetID = lastID;
+		}
 	}
 	
 	private void move2Target() {

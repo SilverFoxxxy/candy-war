@@ -7,7 +7,7 @@ import main.activities.Point;
 import testrandom.TestRandom;
 
 public class Squad {
-	int maxsize = 12;
+	public int maxsize = 12;
 	public int size = 0;
 	private ArrayList<Unit> units = new ArrayList<>();
 	

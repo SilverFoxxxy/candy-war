@@ -2,6 +2,9 @@ package main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
 //import java.awt.Graphics2D;
 //import java.awt.Image;
 //import java.awt.Rectangle;
@@ -51,7 +54,6 @@ public class MyPanel extends JPanel implements ActionListener {
 		timer.start();
 		frame.addKeyListener(new KeyAdapter() {
 
-
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
@@ -85,7 +87,10 @@ public class MyPanel extends JPanel implements ActionListener {
 	
 	public void addButton(Element el) {
 		double W = frame.getWidth();
-		double H = frame.getHeight();
+		double H = frame.getHeight() - 20;
+		if (H <= 0.) {
+			H = 10.;
+		}
 		JButton button = new JButton((imgSrc.iconSource.get(el.imgID)));
 		button.setBounds((int)(el.x0 * W), (int)(el.y0 * H), 
 				(int)(el.w * W), (int)(el.h * H));
@@ -99,12 +104,12 @@ public class MyPanel extends JPanel implements ActionListener {
 		//this.validate();
 	}
 	
-	public void removeButton(Element el) {
-		this.remove(panelButtons.get(el.name));
-		if (panelButtons.containsKey(el.name)) {
-			panelButtons.remove(el.name);
+	public void removeButton(String elName) {
+		if (panelButtons.containsKey(elName)) {
+			this.remove(panelButtons.get(elName));
+			panelButtons.remove(elName);
 		}
-		//System.out.println(elemName + " removed");
+		//System.out.println(elName + " removed");
 		this.validate();
 	}
 	
@@ -112,11 +117,11 @@ public class MyPanel extends JPanel implements ActionListener {
 		Vector <String> toRemove = new Vector<>();
 		for (String elName: panelButtons.keySet()) {
 			if (!m.containsKey(elName)) {
-				removeButton(m.get(elName));
 				toRemove.add(elName);
 			}
 		}
 		for (String elName: toRemove) {
+			removeButton(elName);
 			panelButtons.remove(elName);
 		}
 	}
@@ -126,27 +131,34 @@ public class MyPanel extends JPanel implements ActionListener {
 		Map <String, Element> buttons = elSource.showButtons();
 		Vector <Map <String, Element> > elemsVec = elSource.show();
 		checkButtons(buttons);
-		this.setSize(frame.getSize());
+		this.setSize(frame.getSize().width, frame.getSize().height - 10);
 		setBackground(Color.lightGray);
-		super.paint(g);
-		//Graphics2D g2 = (Graphics2D) g;
 		double W = frame.getWidth();
-		double H = frame.getHeight();
+		double H = frame.getHeight() - 20;
+		if (H <= 0.) {
+			H = 10.;
+		}
+		Graphics2D g2 = (Graphics2D) g;
+		Shape rectShape = new Rectangle(0, 0, frame.getWidth(), frame.getHeight());
+		g2.fill(rectShape);
+		super.paint(g);
 		for (Map<String, Element> elems: elemsVec) {
 			for (Element el : elems.values()) {
 		        if (el.isButton) {
-					if (!el.buttonAdded) {
+		        	//System.out.println(el.name);
+		        	//System.out.println(el.x0 + " " + el.y0 + " " + el.h + " " + el.w);
+					if (!el.buttonAdded && !panelButtons.containsKey(el.name)) {
 						addButton(el);
-						//System.out.println("button added - " + el.name);
+						System.out.println("button added - " + el.name);
 						el.buttonAdded = true;
 					} else {
 						panelButtons.get(el.name).setBounds((int)(el.x0 * W), (int)(el.y0 * H), 
 					(int)(el.w * W), (int)(el.h * H));
 					}
-		        } else {
-		        	g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H),
-		        			(int)(el.w * W) + 1, (int)(el.h * H) + 1, null);
-				}
+		        }// else {
+		        g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H),
+		        		(int)(el.w * W) + 1, (int)(el.h * H) + 1, null);
+				//}
 			}
 		}
 		/*g2.setColor(Color.BLUE);

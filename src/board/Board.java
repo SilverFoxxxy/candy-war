@@ -18,10 +18,13 @@ public class Board {
 	
 	protected ElementSource elems;
 	
+	public boolean gameover = false;
+	public boolean youWin = false;
 	public double cellSize = 10;
 	public int size = 3;
 	public int side = 2;
 	public Cell[][] cells;
+	public Vector<Unit> buildings = new Vector<Unit>(); 
 	
 	protected SquadFactory defFact = new DefendSquadFactory(this);
 	protected SquadFactory atcFact = new AttackSquadFactory(this);

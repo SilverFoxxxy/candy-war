@@ -13,7 +13,7 @@ public class Dragon extends Unit {
 		this.imgID = imgName;
 		imgSize = 0.5;
 		size = 6;
-		maxSpeed = 0;
+		maxSpeed = 0.15;
 		visionDist = 55;
 		atcDist = visionDist;
 		maxHP = 300;
@@ -59,9 +59,22 @@ public class Dragon extends Unit {
 			for (int unitID: units.keySet()) {
 				Unit nowUnit = units.get(unitID);
 				if (coords.dist(nowUnit.coords) <= minDist &&
-						team != nowUnit.team && nowUnit.level <= level) {
+						team != nowUnit.team && nowUnit.level != 5) {
 					lastID = unitID;
 					minDist = coords.dist(nowUnit.coords);
+					//speedXY = 
+				}
+			}
+			targetID = lastID;
+		}
+		if (targetID == -1) {
+			double minDist = 100000000.;
+			int lastID = -1;
+			for (Unit b: board.buildings) {
+				if (coords.dist(b.coords) <= minDist &&
+						team != b.team && !b.dead) {
+					lastID = b.ID;
+					minDist = coords.dist(b.coords);
 					//speedXY = 
 				}
 			}

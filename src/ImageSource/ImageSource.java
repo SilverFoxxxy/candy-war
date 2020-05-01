@@ -46,6 +46,7 @@ public class ImageSource {
 	public void addByPath(String path, String imgID) {
 		String defFolder = "res/img/";
 		defFolder = "";
+		//System.out.println(defFolder + path + ".png");
 		imgSource.put(imgID, SourceLoader.loadImage(defFolder + path + ".png"));
 		iconSource.put(imgID, new ImageIcon(SourceLoader.loadImage(defFolder + path + ".png")));
 	}
@@ -58,5 +59,14 @@ public class ImageSource {
 		addByPath("dragon1", "Dragon");
 		addByPath("fireball1", "FireBall");
 		addByPath("bluefireball0", "BlueFireBall");
+		addByPath("dragon1", "DragonUnit");
+		addByPath("bluebear", "BearUnit");
+		addByPath("fireball1", "Cancel");
+		addByPath("start", "AtcMain");
+		addByPath("atcMainBuild", "AtcMain");
+		addByPath("atcTriangle", "AtcTriangle");
+		addByPath("defMainBuild", "DefMain");
+		addByPath("defTriangle", "DefTriangle");
+		addByPath("start", "putUnit");
 	}
 }

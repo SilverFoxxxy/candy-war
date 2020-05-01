@@ -14,13 +14,13 @@ public class DragonFireBall extends Unit {
 		super(board);
 		this.team = team;
 		imgID = imgName;
-		imgSize = 0.75;
+		imgSize = 0.35;
 		this.coords = new Point(x0, y0);
 		this.coords0 = coords0;
 		this.coords1 = coords1;
 		this.level = 5;
 		this.targetLevel = level;
-		this.atcDist = 10;
+		this.atcDist = 5;
 		maxHP = 1;
 		HP = 1;
 		ATC = 35;

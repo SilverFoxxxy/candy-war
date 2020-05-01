@@ -15,6 +15,8 @@ public class Unit {
 	
 	public String imgID = "Start";
 	
+	public String type;
+	
 	public double imgSize = 1;
 	
 	// highness of the minion:
@@ -56,6 +58,8 @@ public class Unit {
 	public Unit(Board board) {
 		this.board = board;
 	}
+	
+	public Unit(int kek) {}
 	
 	public void die() {
 		dead = true;
