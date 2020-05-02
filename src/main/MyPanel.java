@@ -155,10 +155,10 @@ public class MyPanel extends JPanel implements ActionListener {
 						panelButtons.get(el.name).setBounds((int)(el.x0 * W), (int)(el.y0 * H), 
 					(int)(el.w * W), (int)(el.h * H));
 					}
-		        }// else {
-		        g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H),
-		        		(int)(el.w * W) + 1, (int)(el.h * H) + 1, null);
-				//}
+		        } else {
+		        	g.drawImage(imgSrc.imgSource.get(el.imgID), (int)(el.x0 * W), (int)(el.y0 * H),
+		        			(int)(el.w * W) + 1, (int)(el.h * H) + 1, null);
+				}
 			}
 		}
 		/*g2.setColor(Color.BLUE);

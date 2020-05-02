@@ -3,6 +3,7 @@ package board.squads;
 import board.Board;
 import board.units.Bear;
 import board.units.Dragon;
+import board.units.Giant;
 import board.units.MainBuilding;
 import board.units.TriangleBuilding;
 import board.units.Unit;
@@ -36,7 +37,22 @@ public class DefendSquadFactory implements SquadFactory {
 			if (!squad.add(drag)) {
 				break;
 			}
+			break;
 		}
+		return squad;
+	}
+	
+	public Squad GiantSquad() {
+		Squad squad = new Squad();
+		//while (true) {
+			Unit giant = new Giant(board, "Defence", "DefGiant");
+			squad.add(giant);
+			//drag.visionDist = 100000;
+			//drag.maxSpeed = 0.075;
+			//if (!squad.add(drag)) {
+			//	break;
+			//}
+		//}
 		return squad;
 	}
 	

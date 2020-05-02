@@ -8,9 +8,8 @@ public class MainBuilding extends Building {
 		super(board);
 		this.imgID = imgID;
 		this.team = Team;
-		this.HP = 500;
+		this.HP = 2500;
 		this.imgSize = 2.;
 		// TODO Auto-generated constructor stub
 	}
-
 }

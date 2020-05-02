@@ -4,22 +4,17 @@ import java.util.Map;
 
 import board.Board;
 
-public class Bear extends Unit{
-	public Bear(Board board) {
-		super(board);
-	}
+public class Giant extends Unit {
 	
-	public Bear(Board board, String team, String imgName) {
+	public Giant(Board board, String _team, String imgName) {
 		super(board);
-		this.team = team;
-		this.imgID = imgName;
-		imgSize = 0.2;
-		maxSpeed = 0.1;
+		HP = 1000;
+		ATC = 30;
 		level = 3;
-		maxHP = 100;
-		HP = 100;
-		ATC = 10;
-		maxCoolDown = 20;
+		team = _team;
+		imgID = imgName;
+		imgSize = 0.75;
+		maxSpeed = 0.07;
 	}
 	
 	public void hit() {
@@ -38,28 +33,7 @@ public class Bear extends Unit{
 	
 	private void findTarget() {
 		Map <Integer, Unit> units = board.units;
-		if (units.containsKey(targetID)) {
-			if (coords.dist(units.get(targetID).coords) > visionDist) {
-				targetID = -1;
-			}
-		} else {
-			targetID = -1;
-		}
-		if (targetID == -1) {
-			double minDist = visionDist;
-			int lastID = -1;
-			for (int unitID: units.keySet()) {
-				Unit nowUnit = units.get(unitID);
-				if (nowUnit.level == level && coords.dist(nowUnit.coords) <= minDist &&
-						team != nowUnit.team) {
-					lastID = unitID;
-					minDist = coords.dist(nowUnit.coords);
-					//speedXY = 
-				}
-			}
-			targetID = lastID;
-		}
-		if (targetID == -1) {
+		if (targetID == -1 || !units.containsKey(targetID)) {
 			double minDist = 100000000.;
 			int lastID = -1;
 			for (Unit b: board.buildings) {
@@ -97,4 +71,5 @@ public class Bear extends Unit{
 		move2Target();
 		
 	}
+	
 }

@@ -20,10 +20,10 @@ public class DragonFireBall extends Unit {
 		this.coords1 = coords1;
 		this.level = 5;
 		this.targetLevel = level;
-		this.atcDist = 5;
+		this.atcDist = 3;
 		maxHP = 1;
 		HP = 1;
-		ATC = 35;
+		ATC = 23;
 		maxCoolDown = 20;
 		coolDown = maxCoolDown;
 	}
@@ -31,9 +31,14 @@ public class DragonFireBall extends Unit {
 	public void hit() {
 		if (coolDown == 0) {
 			Map <Integer, Unit> units = board.units;
+			int cnt = 0;
 			for (Unit unit: units.values()) {
+				if (cnt >= 3) {
+					break;
+				}
 				if (unit.team != team && unit.level == targetLevel && coords.dist(unit.coords) <= atcDist) {
 					unit.HP -= ATC;
+					cnt++;
 				}
 			}
 			coolDown = maxCoolDown;

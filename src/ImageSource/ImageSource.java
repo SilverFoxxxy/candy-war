@@ -53,20 +53,31 @@ public class ImageSource {
 	
 	public ImageSource() {
 		addByPath("start", "Start");
+		addByPath("ground", "Chocolate");
+		
 		addByPath("bluebear", "BlueBear");
 		addByPath("yellowbear", "YellowBear");
-		addByPath("ground", "Chocolate");
 		addByPath("dragon1", "Dragon");
-		addByPath("fireball1", "FireBall");
-		addByPath("bluefireball0", "BlueFireBall");
+		addByPath("giant", "Giant");
+		addByPath("defGiant", "DefGiant");
+		
 		addByPath("dragon1", "DragonUnit");
 		addByPath("bluebear", "BearUnit");
-		addByPath("fireball1", "Cancel");
+		addByPath("giant", "GiantUnit");
+		
+		addByPath("fireball1", "FireBall");
+		addByPath("bluefireball0", "BlueFireBall");
+		
+		addByPath("cancel", "Cancel");
 		addByPath("start", "AtcMain");
+		addByPath("mana", "Mana");
+		addByPath("manaClose", "ManaClose");
+		
 		addByPath("atcMainBuild", "AtcMain");
 		addByPath("atcTriangle", "AtcTriangle");
 		addByPath("defMainBuild", "DefMain");
 		addByPath("defTriangle", "DefTriangle");
 		addByPath("start", "putUnit");
+		
 	}
 }

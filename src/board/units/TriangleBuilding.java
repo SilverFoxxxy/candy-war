@@ -8,7 +8,7 @@ public class TriangleBuilding extends Building {
 		super(board);
 		this.imgID = imgID;
 		this.team = Team;
-		this.HP = 200;
+		this.HP = 1200;
 		this.imgSize = 1.50;
 		// TODO Auto-generated constructor stub
 	}

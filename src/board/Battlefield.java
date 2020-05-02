@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 //import java.util.Vector;
 import java.util.Map;
+import java.util.Random;
 
 import board.units.Unit;
 import main.GrUI.Element;
+import main.activities.FrontBoardActivity;
 import main.activities.Point;
 import main.grui.ElementSource;
+import testrandom.TestRandom;
 
 public class Battlefield extends Board {
+	
+	public Map <String, Double> prices = FrontBoardActivity.prices;
 	
 	public Map <String, Integer> globalVar = new HashMap<>();
 	
@@ -172,12 +177,12 @@ public class Battlefield extends Board {
 				Cell nowCell = cells[i][size - 1];
 				int _i = i;
 				int _j = size - 1;
-				System.out.println(nowCell.squad.maxsize);
+				//System.out.println(nowCell.squad.maxsize);
 				ArrayList<Unit> newUnits = nowCell.init();
 				for (Unit unit: newUnits) {
 					unit.coords = (new Point(cellSize * _i, cellSize * _j)).add(
 							(unit.coords).mult(cellSize));
-					System.out.println(unit.coords.x + " " + unit.coords.y);
+					//System.out.println(unit.coords.x + " " + unit.coords.y);
 					//TODO Norma()
 					addUnit(unit);
 				}
@@ -188,13 +193,65 @@ public class Battlefield extends Board {
 			for (int i = 0; i < size; i++) {
 				//System.out.println("buttons added");
 				elems.add(new Element("putUnit" + i, i/n, 1. - 1./n, 1./n, 1./n, true, "putUnit", true, 7));
+				elems.add(new Element("_putUnit" + i, i/n, 1. - 1./n, 1./n, 1./n, true, "putUnit", false, 7));
 			}
+		}
+	}
+	
+	private double mana = 0.;
+	private double maxMana = 10.;
+	private int chosen = -1;
+	private String chosenName = "";
+	
+	private void oppositeMove() {
+		mana += 0.015;
+		if (mana >= maxMana) {
+			mana = maxMana;
+		}
+		if (chosen == -1) {
+			chosen = TestRandom.randInRange(0, 10000);
+			chosen %= prices.size();
+			//System.out.println(chosen);
+		}
+		int kek = 0;
+		for (String name: prices.keySet()) {
+			if (kek == chosen) {
+				chosenName = name;
+			}
+			kek++;
+		}
+		if (prices.containsKey(chosenName) && mana >= prices.get(chosenName) + 1.) {
+			chosen = -1;
+			mana -= prices.get(chosenName) + 1.;
+			int i = TestRandom.randInRange(0, 10000);
+			//System.out.println(i);
+			i %= size;
+			cells[i][0].squad = defFact.SquadByName(chosenName);
+			//System.out.println(atcFact.SquadByName(nowUnit).maxsize);
+			//System.out.println(chosenName);
+			chosenName = "";
+			Cell nowCell = cells[i][0];
+			int _i = i;
+			int _j = 0;
+			
+			ArrayList<Unit> newUnits = nowCell.init();
+			for (Unit unit: newUnits) {
+				unit.coords = (new Point(cellSize * _i, cellSize * _j)).add(
+						(unit.coords).mult(cellSize));
+				//System.out.println(unit.coords.x + " " + unit.coords.y);
+				//TODO Norma()
+				addUnit(unit);
+			}
+			
+			//System.out.println("OHOHOHOHOHOHO");
 		}
 	}
 	
 	public void move() {
 		elems.clear();
 		addUnits();
+		
+		oppositeMove();
 		
 		killUnits();
 		

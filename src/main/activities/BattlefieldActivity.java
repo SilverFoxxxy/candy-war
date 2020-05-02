@@ -36,6 +36,7 @@ public class BattlefieldActivity extends Activity {
 		battlefield.move();
 		if (battlefield.gameover) {
 			battlefield = new Battlefield(7);
+			battlefield.globalVar = globalVar;
 			battlefield.start();
 		}
 		nowUnit = battlefield.nowUnit;

@@ -3,6 +3,7 @@ package board.squads;
 import board.Board;
 import board.units.Bear;
 import board.units.Dragon;
+import board.units.Giant;
 import board.units.MainBuilding;
 import board.units.TriangleBuilding;
 import board.units.Unit;
@@ -38,18 +39,23 @@ public class AttackSquadFactory implements SquadFactory {
 			if (!squad.add(drag)) {
 				break;
 			}
+			break;
 		}
 		return squad;
 	}
 	
-	public Squad SquadByName(String name) {
-		if (name == "BearUnit") {
-			System.out.println("bear");
-			return BearSquad();
-		} else {
-			System.out.println("dear");
-			return DragonSquad();
-		}
+	public Squad GiantSquad() {
+		Squad squad = new Squad();
+		//while (true) {
+			Unit giant = new Giant(board, "Attack", "Giant");
+			squad.add(giant);
+			//drag.visionDist = 100000;
+			//drag.maxSpeed = 0.075;
+			//if (!squad.add(drag)) {
+			//	break;
+			//}
+		//}
+		return squad;
 	}
 	
 	public Unit Triangle(Point xy) {

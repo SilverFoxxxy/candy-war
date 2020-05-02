@@ -11,10 +11,10 @@ public class Dragon extends Unit {
 		super(board);
 		this.team = team;
 		this.imgID = imgName;
-		imgSize = 0.5;
+		imgSize = 0.65;
 		size = 6;
 		maxSpeed = 0.15;
-		visionDist = 55;
+		visionDist = 25;
 		atcDist = visionDist;
 		maxHP = 300;
 		HP = 300;
@@ -84,7 +84,7 @@ public class Dragon extends Unit {
 	
 	private void move2Target() {
 		Map <Integer, Unit> units = board.units;
-		if (targetID != -1) {
+		if (targetID != -1 && units.containsKey(targetID)) {
 			if (coords.dist(units.get(targetID).coords) > closeDist) {
 				speed = (units.get(targetID).coords.sub(coords));
 				speed = speed.Normalize();

@@ -13,11 +13,12 @@ public class FrontBoardActivity extends Activity{
 	double mana = 0.;
 	double maxMana = 10.;
 	String nowUnit = "";
-	Map <String, Double> prices = new HashMap<>();
+	public static Map <String, Double> prices = new HashMap<>();
 	
 	private void initPrices() {
 		prices.put("BearUnit", 2.);
-		prices.put("DragonUnit", 6.);
+		prices.put("DragonUnit", 8.);
+		prices.put("GiantUnit", 5.);
 	}
 	
 	public FrontBoardActivity() {
@@ -58,13 +59,14 @@ public class FrontBoardActivity extends Activity{
 	}
 	
 	public void move() {
-		if (prices.containsKey(nowUnit)) {
+		if (prices.containsKey(nowUnit) && battlefield.nowUnit == "") {
 			if (mana >= prices.get(nowUnit)) {
 				mana -= prices.get(nowUnit);
 				battlefield.nowUnit = nowUnit;
 				nowUnit = "";
 			}
 		}
+		uPanel.updButtons(prices, mana);
 		super.move();
 		if (battlefield.nowUnit == "") {
 			nowUnit = "";
@@ -77,7 +79,8 @@ public class FrontBoardActivity extends Activity{
 	}
 	
 	private void showMana() {
-		elems.add(new Element("mana", 1. - 1./30, 1. - mana / maxMana, 1./30, mana / maxMana, true, "Start", false));
+		elems.add(new Element("mana", 1. - 1./30, 0., 1./30, 1., true, "Mana", false, 5));
+		elems.add(new Element("mana", 1. - 1./30, 0., 1./30, 1. -  mana / maxMana, true, "ManaClose", false, 6));
 	}
 	
 	public ElementSource show() {

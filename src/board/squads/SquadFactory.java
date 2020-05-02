@@ -11,7 +11,20 @@ public interface SquadFactory {
 	
 	public default Squad DragonSquad() {return new Squad();}
 	
-	public default Squad SquadByName(String s) {return new Squad();}
+	public default Squad GiantSquad() {return new Squad();}
+	
+	public default Squad SquadByName(String name) {
+		switch (name) {
+		case "BearUnit":
+			return BearSquad();
+		case "DragonUnit":
+			return DragonSquad();
+		case "GiantUnit":
+			return GiantSquad();
+		default:
+			return new Squad();
+		}
+	}
 	
 	public default Unit Triangle(Point xy) {return new Unit(0);}
 	
