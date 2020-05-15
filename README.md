@@ -1,6 +1,10 @@
 # CandyWar
 
 
+Done: Structure Model
+------------------------------------------------------------
+https://drive.google.com/file/d/11w7ujbhlVKztYb9X3uXKhm7PbXplG5a9/view?usp=sharing
+
 
 Done: Runnable
 ------------------------------------------------------------
